@@ -1,0 +1,49 @@
+version: '1'
+
+services:
+  db:
+    image: mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: auctiondb
+      MYSQL_USER: auctionuser
+      MYSQL_PASSWORD: auctionpassword
+    ports:
+      - "3306:3306"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb --user=auctionuser --password=auctionpassword --execute \"SHOW DATABASES;\""]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  backend:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=mariadb://auctionuser:auctionpassword@db/auctiondb
+    restart: always
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  db_data:
