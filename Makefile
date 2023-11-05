@@ -11,7 +11,7 @@ django-tests: # Run backend tests
 		if [ "$$iter" -eq 10 ]; then \
 			echo Test existence failed && exit 1; \
 		fi; \
-		if [ $(shell curl -s -o /dev/null -I -w "%{http_code}" http://localhost:8000) -eq 200 ]; then \
+		if [ `curl -s -o /dev/null -I -w "%{http_code}" http://localhost:8000` -eq 200 ]; then \
 			break; \
 		fi; \
 		echo "sleeping 2 seconds..."; \
