@@ -4,8 +4,12 @@ default: help
 help: # Show help for each of the Makefile recipes.
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
-django-tests: # Run backend tests
+django-tests: docker-rm # Run backend tests
 	docker-compose up -d db backend
+
+	#
+	# Verify backend service response
+	#
 	for iter in 1 2 3 4 5 6 7 8 9 10; \
 	do \
 		if [ "$$iter" -eq 10 ]; then \
