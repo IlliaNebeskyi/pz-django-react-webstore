@@ -1,7 +1,8 @@
-version: '1'
+version: '3.5'
 
 services:
   db:
+    container_name: db
     image: mariadb
     volumes:
       - db_data:/var/lib/mysql
@@ -18,9 +19,9 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
-      start_period: 10s
 
   backend:
+    container_name: backend
     build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -35,6 +36,7 @@ services:
     restart: always
 
   frontend:
+    container_name: frontend
     build: ./frontend
     volumes:
       - ./frontend:/app
