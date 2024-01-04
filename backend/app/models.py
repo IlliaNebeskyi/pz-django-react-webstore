@@ -19,7 +19,7 @@ class User(AbstractUser):
     """
         User model.
     """
-    REQUIRED_FIELDS = ['email', 'username']
+    REQUIRED_FIELDS = ['email']
     
     city = models.CharField(_('city'), max_length=63)
     street = models.CharField(_('street'), max_length=63)
@@ -50,7 +50,7 @@ class Auction(models.Model):
 
     title = models.CharField(_('title'), max_length=63)
     body = models.CharField(_('body'), max_length=1023)
-    seller = models.ForeignKey(_('seller'), User)
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(_('created at'), auto_now_add=True)
     status = models.CharField(
         max_length=2,
@@ -70,8 +70,8 @@ class Order(models.Model):
         SENT = 'SE', _('sent')
         DONE = 'DO', _('done')
 
-    buyer = models.ForeignKey(_('buyer'), User)
-    auction = models.ForeignKey(_('auction'), Auction)
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
     created = models.DateTimeField(_('created at'), auto_now_add=True)
     status = models.CharField(
         _('status'),
@@ -85,8 +85,8 @@ class Bid(models.Model):
     """
         Stores a single bid entry, related to :model:`models.Auction and :model:`models.User`.
     """
-    auction = models.ForeignKey(_('auction'), Auction)
-    bidder = models.ForeignKey(_('bidder'), User)
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE)
     value = models.DecimalField(_('value'), max_digits=10, decimal_places=2)
     created = models.DateTimeField(_('created at'), auto_now_add=True)
 
@@ -99,7 +99,7 @@ class Message(models.Model):
         BUYER = 'BU', _('buyer')
         SELLER = 'SE', _('seller')
 
-    order = models.ForeignKey(_('order'), Order)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     sender = models.CharField(
         _('sender'),
         max_length=2,
