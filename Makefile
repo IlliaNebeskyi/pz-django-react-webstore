@@ -32,3 +32,15 @@ docker-rm: # Remove running containers
 	if [ $(shell docker ps -a -q -f name=backend | wc -l ) -gt 0 ]; then \
 		docker rm backend -f; \
 	fi
+	docker volume prune -f
+
+init: docker-rm
+	#
+	# Run django server
+	#
+	docker-compose up -d db backend
+	#
+	# make db migrations
+	#
+	docker exec backend python manage.py makemigrations app
+	docker exec backend python manage.py migrate

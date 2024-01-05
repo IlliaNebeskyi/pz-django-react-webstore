@@ -133,6 +133,7 @@ dmypy.json
 
 # db files
 /db
+/backend/app/migrations
 
 # node files
 /frontend/node_modules

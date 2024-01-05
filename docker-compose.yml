@@ -3,9 +3,9 @@ version: '3.5'
 services:
   db:
     container_name: db
-    image: mariadb
-    volumes:
-      - db_data:/var/lib/mysql
+    image: mysql
+    #volumes:
+    #  - db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: auctiondb
@@ -15,7 +15,7 @@ services:
       - "3306:3306"
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "mariadb --user=auctionuser --password=auctionpassword --execute \"SHOW DATABASES;\""]
+      test: ["CMD-SHELL", "mysql --user=auctionuser --password=auctionpassword --execute \"SHOW DATABASES;\""]
       interval: 10s
       timeout: 10s
       retries: 3
