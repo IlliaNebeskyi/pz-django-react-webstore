@@ -44,3 +44,7 @@ init: docker-rm
 	#
 	docker exec backend python manage.py makemigrations app
 	docker exec backend python manage.py migrate
+	#
+	# create super user
+	#
+	docker exec backend python manage.py createsuperuser --noinput # http://localhost:8000/admin/
