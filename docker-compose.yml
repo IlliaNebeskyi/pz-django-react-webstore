@@ -32,7 +32,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      - DATABASE_URL=mariadb://auctionuser:auctionpassword@db/auctiondb
+      - DATABASE_URL=mysql://auctionuser:auctionpassword@db/auctiondb
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=admin
       - DJANGO_SUPERUSER_EMAIL=admin@localhost
