@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Frontend for my web app",
   "main": "src/index.js",
+  "proxy": "http://host.docker.internal:8000/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -10,9 +11,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "axios": "^0.18.1",
+    "bootstrap": "^4.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "reactstrap": "^9.2.1"
   },
   "browserslist": {
     "production": [
