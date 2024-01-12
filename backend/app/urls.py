@@ -18,10 +18,10 @@ router.register(r'messages', MessageView, 'message')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/register', RegistrationView.as_view(), name='register'),
+    path('api/login', LoginView.as_view(), name='login'),
+    path('api/logout', LogoutView.as_view(), name='logout'),
+    path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
+    path('api/token-refresh', jwt_views.TokenRefreshView.as_view(), name='token-refresh'),
     path('api/', include(router.urls)),
-    path('accounts/register', RegistrationView.as_view(), name='register'),
-    path('accounts/login', LoginView.as_view(), name='register'),
-    path('accounts/logout', LogoutView.as_view(), name='register'),
-    path('accounts/change-password', ChangePasswordView.as_view(), name='register'),
-    path('accounts/token-refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
 ]
