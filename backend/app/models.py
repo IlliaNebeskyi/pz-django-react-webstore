@@ -2,7 +2,7 @@
     DB models declaration.
 """
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -15,6 +15,45 @@ class ServerStat(models.Model):
     value = models.IntegerField()
 
 
+class MyUserManager(BaseUserManager):
+    def create_user(self, email, username, city, street, street_number, bank_number, password=None):
+        """
+        Creates and saves a User
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username,
+            city=city,
+            street=street,
+            street_number=street_number,
+            bank_number=bank_number,
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, username, password=None):
+        """
+        Creates and saves a superuser.
+        """
+        user = self.create_user(
+            email,
+            username,
+            password=password,
+            city=None,
+            street=None,
+            street_number=None,
+            bank_number=None,
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+
 class User(AbstractUser):
     """
         User model.
@@ -25,6 +64,7 @@ class User(AbstractUser):
     street = models.CharField(_('street'), max_length=63)
     street_number = models.CharField(_('street number'), max_length=63)
     bank_number = models.CharField(_('bank number'), max_length=63)
+    is_admin = models.BooleanField(default=False)
 
 
 class Auction(models.Model):
