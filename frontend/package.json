@@ -2,13 +2,14 @@
   "name": "frontend",
   "version": "0.1.0",
   "description": "Frontend for my web app",
-  "main": "src/index.js",
+  "main": "src/index.jsx",
   "proxy": "http://host.docker.internal:8000/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "webpack-dev-server --hot"
   },
   "dependencies": {
     "axios": "^0.18.1",
@@ -16,7 +17,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "reactstrap": "^9.2.1"
+    "reactstrap": "^9.2.1",
+    "webpack-cli": "^5.1.4"
   },
   "browserslist": {
     "production": [
