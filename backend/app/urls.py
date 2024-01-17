@@ -4,7 +4,7 @@ from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 
 from app.views.user_creation import RegistrationView, LoginView, LogoutView, ChangePasswordView
-from app.views.base import ServerStatView, UserView, AuctionView, ChatView, MessageView
+from app.views.base import ServerStatView, UserView, AuctionView, ChatView, MessageView  # , BuyView
 
 
 router = routers.DefaultRouter()
@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/logout', LogoutView.as_view(), name='logout'),
     path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
     path('api/token-refresh', jwt_views.TokenRefreshView.as_view(), name='token-refresh'),
+    # path('api/buy', BuyView.as_view(), name='buy'),
     path('api/', include(router.urls)),
 ]

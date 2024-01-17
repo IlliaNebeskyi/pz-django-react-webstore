@@ -81,7 +81,7 @@ class Auction(models.Model):
     title = models.CharField(_('title'), max_length=63)
     body = models.CharField(_('body'), max_length=1023)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_auctions')
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='auctions')
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='auctions', null=True)
     created = models.DateTimeField(_('created at'), auto_now_add=True)
     status = models.CharField(
         max_length=2,
