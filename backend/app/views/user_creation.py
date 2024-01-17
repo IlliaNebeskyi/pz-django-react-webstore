@@ -9,12 +9,14 @@ from rest_framework.views import APIView
 from app.utils import get_tokens_for_user
 from app.serializers import RegistrationSerializer, PasswordChangeSerializer, UserSerializer
 
+from app.logs import setup_logging
 
-# Create your views here.
+log = setup_logging(__name__)
 
 
 class RegistrationView(APIView):
     def post(self, request):
+        log.info(request.data)
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
@@ -25,11 +27,12 @@ class RegistrationView(APIView):
 
 class LoginView(APIView):
     def post(self, request):
-        if 'email' not in request.data or 'password' not in request.data:
+        log.info(request.data)
+        if 'username' not in request.data or 'password' not in request.data:
             return Response({'msg': 'Credentials missing'}, status=status.HTTP_400_BAD_REQUEST)
-        email = request.POST['email']
-        password = request.POST['password']
-        user = authenticate(request, email=email, password=password)
+        username = request.data['username']
+        password = request.data['password']
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             auth_data = get_tokens_for_user(request.user)

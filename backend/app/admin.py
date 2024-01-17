@@ -37,7 +37,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = models.User
-        fields = ('email', 'password', 'city', 'street', 'street_number', 'bank_number', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'city', 'street', 'street_number', 'bank_number', 'is_staff')
 
     def clean_password(self):
         return self.initial["password"]
@@ -47,12 +47,12 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('username', 'email', 'city', 'street', 'street_number', 'bank_number', 'is_admin')
-    list_filter = ('is_admin', )
+    list_display = ('username', 'email', 'city', 'street', 'street_number', 'bank_number', 'is_staff')
+    list_filter = ('is_staff', )
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
         ('Personal info', {'fields': ('city', 'street', 'street_number', 'bank_number')}),
-        ('Permissions', {'fields': ('is_admin',)})
+        ('Permissions', {'fields': ('is_staff',)})
     )
     add_fieldsets = (
         (None, {
@@ -66,8 +66,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
-admin.site.register(models.Bid)
-admin.site.register(models.Order)
 admin.site.register(models.Auction)
 admin.site.register(models.Message)
+admin.site.register(models.Chat)
 admin.site.register(models.ServerStat)

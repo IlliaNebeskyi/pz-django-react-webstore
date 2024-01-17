@@ -11,13 +11,16 @@ import {
   Label,
 } from "reactstrap";
 
-export default class UserRegistrationModal extends Component {
+export default class SignUpModal extends Component {
   constructor(props) {
     super(props);
+    const { activeItem, toggle, onSave } = props;
     this.state = {
-      activeItem: this.props.activeItem,
+      activeItem: activeItem,
+      toggle: toggle,
+      onSave: onSave
     };
-  }
+  };
 
   handleChange = (e) => {
     let { name, value } = e.target;

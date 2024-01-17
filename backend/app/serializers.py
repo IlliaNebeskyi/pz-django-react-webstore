@@ -1,6 +1,10 @@
 from rest_framework import serializers
 from app import models
 
+from app import logs
+
+log = logs.setup_logging(__name__)
+
 
 class ServerStatSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,25 +21,19 @@ class UserSerializer(serializers.ModelSerializer):
 class AuctionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Auction
-        fields = ('id', 'title', 'body', 'seller', 'created', 'status', 'price')
+        fields = ('id', 'title', 'body', 'seller', 'buyer', 'status', 'price', 'created')
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class ChatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Order
-        fields = ('id', 'buyer', 'auction', 'created', 'created', 'status')
-
-
-class BidSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Bid
-        fields = ('id', 'auction', 'bidder', 'value', 'created')
+        model = models.Auction
+        fields = ('id', 'auction', 'client')
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Message
-        fields = ('id', 'order', 'sender', 'message', 'created')
+        fields = ('id', 'chat', 'sender', 'message', 'created')
 
 
 class RegistrationSerializer(serializers.ModelSerializer):

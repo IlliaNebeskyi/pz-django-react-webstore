@@ -18,14 +18,9 @@ class AuctionView(viewsets.ModelViewSet):
     queryset = models.Auction.objects.all()
 
 
-class OrderView(viewsets.ModelViewSet):
-    serializer_class = serializers.OrderSerializer
-    queryset = models.Order.objects.all()
-
-
-class BidView(viewsets.ModelViewSet):
-    serializer_class = serializers.BidSerializer
-    queryset = models.Bid.objects.all()
+class ChatView(viewsets.ModelViewSet):
+    serializer_class = serializers.ChatSerializer
+    queryset = models.Chat.objects.all()
 
 
 class MessageView(viewsets.ModelViewSet):

@@ -4,15 +4,14 @@ from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 
 from app.views.user_creation import RegistrationView, LoginView, LogoutView, ChangePasswordView
-from app.views.base import ServerStatView, UserView, AuctionView, OrderView, BidView, MessageView
+from app.views.base import ServerStatView, UserView, AuctionView, ChatView, MessageView
 
 
 router = routers.DefaultRouter()
 router.register(r'stats', ServerStatView, 'stat')
 router.register(r'users', UserView, 'user')
 router.register(r'auctions', AuctionView, 'auction')
-router.register(r'orders', OrderView, 'order')
-router.register(r'bids', BidView, 'bid')
+router.register(r'chats', ChatView, 'chat')
 router.register(r'messages', MessageView, 'message')
 
 
