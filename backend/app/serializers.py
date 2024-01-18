@@ -26,7 +26,7 @@ class AuctionSerializer(serializers.ModelSerializer):
 
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Auction
+        model = models.Chat
         fields = ('id', 'auction', 'client')
 
 
