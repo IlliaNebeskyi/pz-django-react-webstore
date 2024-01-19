@@ -1,8 +1,9 @@
-INSERT INTO auctiondb.app_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, city, street, street_number, bank_number) VALUES
-('pbkdf2_sha256$720000$SsBlkN3iTHMtRbocCZiSZ3$parfH6Doyp6eGlEOv88PzmGYsWcneWBjIZR0WzzIi+k=', 0, 'user1', 'name1', 'lastname1', 'user1@auction.local', 0, 0, '2024-01-14 15:52:04.269978', 'Gdańsk', 'Grunwaldzka', '1', '123456'),
-('pbkdf2_sha256$720000$SsBlkN3iTHMtRbocCZiSZ3$parfH6Doyp6eGlEOv88PzmGYsWcneWBjIZR0WzzIi+k=', 0, 'user2', 'name2', 'lastname2', 'user2@auction.local', 0, 0, '2024-01-14 15:52:04.269978', 'Gdańsk', 'Grunwaldzka', '2', '123456'),
-('pbkdf2_sha256$720000$SsBlkN3iTHMtRbocCZiSZ3$parfH6Doyp6eGlEOv88PzmGYsWcneWBjIZR0WzzIi+k=', 0, 'user3', 'name3', 'lastname3', 'user3@auction.local', 0, 0, '2024-01-14 15:52:04.269978', 'Gdańsk', 'Grunwaldzka', '3', '123456'),
-('pbkdf2_sha256$720000$SsBlkN3iTHMtRbocCZiSZ3$parfH6Doyp6eGlEOv88PzmGYsWcneWBjIZR0WzzIi+k=', 0, 'user4', 'name4', 'lastname4', 'user4@auction.local', 0, 0, '2024-01-14 15:52:04.269978', 'Gdańsk', 'Grunwaldzka', '4', '123456');
+INSERT INTO auctiondb.app_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, city, street, street_number, bank_number) VALUES
+(2, 'pbkdf2_sha256$720000$PeiZmmYWbSXZNJMwdo5kpt$PHaCCHV5U87T5/slqx2vqX0cQuiDaszRS4v1HY6/PgY=', null, 0, 'user1', '', '', 'user1@auction.local', 0, 1, '2024-01-18 18:40:41.592411', 'Gdańsk', 'Grunwaldzka', '1', '100001'),
+(3, 'pbkdf2_sha256$720000$IZe4uVqBiyabqJZaH8qxWF$NtIAktI9+232gNA7CKmACK6AYCFgoi1ViFH7I0Udrlo=', null, 0, 'user2', '', '', 'user2@auction.local', 0, 1, '2024-01-18 18:41:30.949515', 'Sopot', 'Sopocka', '2', '100002'),
+(4, 'pbkdf2_sha256$720000$FQvlPcbIozAfBt0E3edvUJ$CnlJg/rL1mhJ53evYFerHlPQ6Wqr1yoP5+KB3sWn4mQ=', null, 0, 'user3', '', '', 'user3@auction.local', 0, 1, '2024-01-18 18:42:05.607356', 'Gdynia', 'Mickiewicza', '5', '100003'),
+(5, 'pbkdf2_sha256$720000$pZEjt4fltvw49EJchJtK2I$J/yXbzBD/WXslOtOTJpU3n9PzH4tuZ/68bgA4qIXafU=', null, 0, 'user4', '', '', 'user4@auction.local', 0, 1, '2024-01-18 18:42:41.826310', 'Gdańsk', 'Grunwaldzka', '4', '100004'),
+(6, 'pbkdf2_sha256$720000$AunMafl9qeseAEeiIOwbGG$SlUqotFVooIyYPyXZyQ8exWb0flj8PoezVjrVkKrZH4=', null, 0, 'user5', '', '', 'user5@auction.local', 0, 1, '2024-01-18 18:43:05.474294', 'Hel', 'Hel', '5', '100005');
 
 INSERT INTO auctiondb.app_auction (title, body, created, status, price, seller_id, buyer_id) VALUES
 ('Used Smartphone', 'I offer used Samsung S10 in a good state', '2024-01-13 15:52:04.269978', 'AC', 1999.98, 2, null),

@@ -133,8 +133,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'app.User'
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+     'http://localhost:3000',
+     'http://host.docker.internal:3000',
 ]
+CSRF_TRUSTED_ORIGINS = ['http://host.docker.internal:8000']
 
 LOGGING = {
     "version": 1,

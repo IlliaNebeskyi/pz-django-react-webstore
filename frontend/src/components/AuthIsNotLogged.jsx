@@ -4,15 +4,16 @@ import SignInModal from "./SignInModal";
 
 import axios from "axios";
 
-export default class AutIsNotLogged extends Component {
+export default class AuthIsNotLogged extends Component {
   constructor(props) {
     super(props);
+    const { login } = props;
     this.state = {
-      is_logged: false,
       errorMessage: "",
       message: "",
-      activeItem: false,
+      activeItem: false
     };
+    this.login = login
   }
 
   toggle = (item) => {
@@ -27,7 +28,7 @@ export default class AutIsNotLogged extends Component {
       .catch(error => {
         this.setState({ errorMessage: error });
       })
-      .then((res) => this.setState({ message: res }));
+      .then(() => this.setState({ message: "ok" }));
   };
 
   handleLogin = (item) => {
@@ -38,7 +39,7 @@ export default class AutIsNotLogged extends Component {
       .catch(error => {
         this.setState({ errorMessage: error });
       })
-      .then((res) => this.setState({ message: res }));
+      .then(() => this.login());
   };
 
   createItem = (item) => {
