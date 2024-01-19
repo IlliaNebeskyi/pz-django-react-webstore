@@ -27,8 +27,8 @@ urlpatterns = [
     path('api/auctions/buy/<int:auction_id>', BuyView.as_view(), name='buy'),
     path('api/auctions/add-auction', AddAuctionView.as_view(), name='add-auction'),
     path('api/auctions/edit-auction/<int:auction_id>/', EditAuctionView.as_view(), name='edit-auction'),
-    # path('api/chats/', ListChatsView.as_view(), name='list-chats'),
-    # path('api/chats/auctions/<int:auction_id>/', ListChatMessagesView.as_view(), name='list-chat-messages'),
-    # path('api/chats/auctions/<int:auction_id>/send-message/', SendMessageView.as_view(), name='send-message'),
+    path('api/chats/', ListChatsView.as_view(), name='list-chats'),
+    path('api/chats/auctions/<int:auction_id>/', ListChatMessagesView.as_view(), name='list-chat-messages'),
+    path('api/chats/auctions/<int:auction_id>/send-message/', SendMessageView.as_view(), name='send-message'),
     path('api/', include(router.urls)),
 ]
