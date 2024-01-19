@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from app import models
+from app.serializers import AuctionSerializer
 
 from app.logs import setup_logging
 
@@ -14,6 +15,14 @@ log = setup_logging(__name__)
 User = get_user_model()
 # used_permission_classes = []
 used_permission_classes = [IsAuthenticated]
+
+class UserAuctionsView(APIView):
+    permission_classes = used_permission_classes
+
+    def get(self, request, user_id):
+        auctions = models.Auction.objects.filter(seller_id=user_id)
+        serializer = AuctionSerializer(auctions, many=True)
+        return Response(serializer.data)
 
 class BuyView(APIView):
     permission_classes = used_permission_classes

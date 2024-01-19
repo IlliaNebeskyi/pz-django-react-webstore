@@ -5,7 +5,7 @@ from rest_framework_simplejwt import views as jwt_views
 
 from app.views.user_creation import RegistrationView, LoginView, LogoutView, ChangePasswordView
 from app.views.base import ServerStatView, UserView, AuctionView, ChatView, MessageView  # , BuyView
-from app.views.auction import AddAuctionView, EditAuctionView, BuyView
+from app.views.auction import UserAuctionsView, AddAuctionView, EditAuctionView, BuyView, CancelAuctionView
 from app.views.chat import ListChatsView, ListChatMessagesView, SendMessageView
 
 
@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/change-password', ChangePasswordView.as_view(), name='change-password'),
     path('api/token-refresh', jwt_views.TokenRefreshView.as_view(), name='token-refresh'),
     path('api/auctions/buy/<int:auction_id>', BuyView.as_view(), name='buy'),
+    path('api/auctions/<int:user_id>', UserAuctionsView.as_view(), name='user-auctions'),
     path('api/auctions/add-auction', AddAuctionView.as_view(), name='add-auction'),
     path('api/auctions/edit-auction/<int:auction_id>/', EditAuctionView.as_view(), name='edit-auction'),
     path('api/chats/', ListChatsView.as_view(), name='list-chats'),
