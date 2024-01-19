@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from 'react';
 import {
   Button,
   Modal,
@@ -11,35 +11,28 @@ import {
   Label,
 } from "reactstrap";
 
-export default class SignInModal extends Component {
-  constructor(props) {
-    super(props);
-    const { activeItem, toggle, onSave } = props;
-    this.state = {
-      activeItem: activeItem,
-      toggle: toggle,
-      onSave: onSave
-    };
+export default function Login({
+    onSave,
+    toggle,
+}) {
+  const [form, setForm] = useState({
+      username: "",
+      password: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm(prevForm => ({
+        ...prevForm,
+        [name]: value
+    }));
+
   };
 
-  handleChange = (e) => {
-    let { name, value } = e.target;
-
-    if (e.target.type === "checkbox") {
-      value = e.target.checked;
-    }
-
-    const activeItem = { ...this.state.activeItem, [name]: value };
-
-    this.setState({ activeItem });
-  };
-
-  render() {
-    const { toggle, onSave } = this.props;
-
-    return (
+  return (
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Sign In</ModalHeader>
+        <ModalHeader toggle={toggle}>Login</ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
@@ -48,8 +41,8 @@ export default class SignInModal extends Component {
                 type="text"
                 id="user-username"
                 name="username"
-                value={this.state.activeItem.username}
-                onChange={this.handleChange}
+                value={form.username}
+                onChange={handleChange}
                 placeholder="Enter username"
               />
             </FormGroup>
@@ -59,8 +52,8 @@ export default class SignInModal extends Component {
                 type="text"
                 id="user-password"
                 name="password"
-                value={this.state.activeItem.password}
-                onChange={this.handleChange}
+                value={form.password}
+                onChange={handleChange}
                 placeholder="Enter password"
               />
             </FormGroup>
@@ -69,12 +62,11 @@ export default class SignInModal extends Component {
         <ModalFooter>
           <Button
             color="success"
-            onClick={() => onSave(this.state.activeItem)}
+            onClick={() => onSave(form)}
           >
-            Log In
+            Save
           </Button>
         </ModalFooter>
       </Modal>
     );
-  }
 }

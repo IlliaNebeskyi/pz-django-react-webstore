@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from 'react';
 import {
   Button,
   Modal,
@@ -11,33 +11,30 @@ import {
   Label,
 } from "reactstrap";
 
-export default class SignUpModal extends Component {
-  constructor(props) {
-    super(props);
-    const { activeItem, toggle, onSave } = props;
-    this.state = {
-      activeItem: activeItem,
-      toggle: toggle,
-      onSave: onSave
-    };
-  };
+function Register({
+    onSave,
+    toggle,
+}) {const [form, setForm] = useState({
+      email: "",
+      username: "",
+      password: "",
+      password2: "",
+      city: "",
+      street: "",
+      street_number: "",
+      bank_number: ""
+  });
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     let { name, value } = e.target;
 
-    if (e.target.type === "checkbox") {
-      value = e.target.checked;
-    }
-
-    const activeItem = { ...this.state.activeItem, [name]: value };
-
-    this.setState({ activeItem });
+    setForm(prevForm => ({
+        ...prevForm,
+        [name]: value
+    }));
   };
 
-  render() {
-    const { toggle, onSave } = this.props;
-
-    return (
+  return (
       <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}>Register</ModalHeader>
         <ModalBody>
@@ -48,8 +45,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-email"
                 name="email"
-                value={this.state.activeItem.email}
-                onChange={this.handleChange}
+                value={form.email}
+                onChange={handleChange}
                 placeholder="Enter Email"
               />
             </FormGroup>
@@ -59,8 +56,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-username"
                 name="username"
-                value={this.state.activeItem.username}
-                onChange={this.handleChange}
+                value={form.username}
+                onChange={handleChange}
                 placeholder="Enter username"
               />
             </FormGroup>
@@ -70,8 +67,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-password"
                 name="password"
-                value={this.state.activeItem.password}
-                onChange={this.handleChange}
+                value={form.password}
+                onChange={handleChange}
                 placeholder="Enter password"
               />
             </FormGroup>
@@ -81,8 +78,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-password2"
                 name="password2"
-                value={this.state.activeItem.password2}
-                onChange={this.handleChange}
+                value={form.password2}
+                onChange={handleChange}
                 placeholder="Enter password again"
               />
             </FormGroup>
@@ -92,8 +89,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-city"
                 name="city"
-                value={this.state.activeItem.city}
-                onChange={this.handleChange}
+                value={form.city}
+                onChange={handleChange}
                 placeholder="City"
               />
             </FormGroup>
@@ -103,8 +100,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-street"
                 name="street"
-                value={this.state.activeItem.street}
-                onChange={this.handleChange}
+                value={form.street}
+                onChange={handleChange}
                 placeholder="Enter Street"
               />
             </FormGroup>
@@ -114,8 +111,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-street_number"
                 name="street_number"
-                value={this.state.activeItem.street_number}
-                onChange={this.handleChange}
+                value={form.street_number}
+                onChange={handleChange}
                 placeholder="Enter Street number"
               />
             </FormGroup>
@@ -125,8 +122,8 @@ export default class SignUpModal extends Component {
                 type="text"
                 id="user-bank_number"
                 name="bank_number"
-                value={this.state.activeItem.bank_number}
-                onChange={this.handleChange}
+                value={form.bank_number}
+                onChange={handleChange}
                 placeholder="Enter bank number"
               />
             </FormGroup>
@@ -135,12 +132,13 @@ export default class SignUpModal extends Component {
         <ModalFooter>
           <Button
             color="success"
-            onClick={() => onSave(this.state.activeItem)}
+            onClick={() => onSave(form)}
           >
             Save
           </Button>
         </ModalFooter>
       </Modal>
     );
-  }
 }
+
+export default Register;
