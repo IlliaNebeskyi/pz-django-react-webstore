@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Modal from 'react-modal';
 import Login from './Login';
 import Register from './Register';
 import axios from "axios";
-import Auction from "./Auctions";
+import Auctions from "./Auctions";
 
 
-Modal.setAppElement('#root'); // Set the root element for accessibility
+Modal.setAppElement('#root');
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -107,7 +107,7 @@ function App() {
             <div className="row">
                 <div className="col-md-6 col-sm-10 col-lg-10 mx-auto p-0">
                     <div className="card p-3">
-                        <Auction username={username} isLoggedIn={isLoggedIn}/>
+                        <Auctions username={username} isLoggedIn={isLoggedIn}/>
                     </div>
                 </div>
             </div>

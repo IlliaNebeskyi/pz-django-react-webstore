@@ -1,23 +1,53 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import Chat from "./Chat";
+import Auction from "./Auction";
 
-function Auction({
-                     username,
-                     isLoggedIn,
-                 }) {
+function Auctions({
+                      username,
+                      isLoggedIn,
+                  }) {
     const [auctions, setAuctions] = useState([]);
     const [isChatActive, setIsChatActive] = useState(false);
+    const [isAddAuctionActive, setIsAddAuctionActive] = useState(false);
     const [activeAuction, setActiveAuction] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('/api/auctions');
-            const data = await response.json();
-            setAuctions(data)
+            refreshAuctions()
         };
         fetchData();
     }, []);
+
+    const FullStatus = {
+        "AC": "Active",
+        "CC": "Canceled",
+        "FI": "Finished",
+        "NO": "No offers",
+        "OB": "Obsoleted",
+    }
+
+    const refreshAuctions = () => {
+        axios
+            .get('api/auctions')
+            .then(res => {
+                const data = res.data;
+                setAuctions(data)
+            });
+    }
+
+    const addAuction = (form) => {
+        axios
+            .post("api/auctions/add-auction", form)
+            .catch((error) => {
+                alert(error.response.data.error);
+            })
+            .then((res) => {
+                if (res)
+                    alert(res.data.message);
+                refreshAuctions();
+            });
+    }
 
     const cancelAuction = (id) => {
         axios
@@ -40,6 +70,7 @@ function Auction({
             .then((res) => {
                 if (res)
                     alert(res.data.message);
+                refreshAuctions()
             });
     }
 
@@ -52,6 +83,7 @@ function Auction({
             .then((res) => {
                 if (res)
                     alert(res.data.message);
+                refreshAuctions()
             });
     }
 
@@ -60,7 +92,8 @@ function Auction({
                 <td className='table-data'>
                     <div className="row">
                         <button className="btn btn-primary col-4 d-md-flex"
-                                onClick={() => {}}>Chat
+                                onClick={() => {
+                                }}>Chat
                         </button>
                         <button className="btn btn-warning col-4 d-md-flex"
                                 onClick={() => editAuction(auction.id)}>Edit
@@ -92,12 +125,30 @@ function Auction({
         setIsChatActive(!isChatActive);
     };
 
+    const toggleAddAuction = () => {
+        setIsAddAuctionActive(!isAddAuctionActive);
+    };
+
     return (
         <div>
-            <h1>List of auctions</h1>
+            <div className="row">
+                <div className="col-9">
+                    <h1>List of auctions</h1>
+                </div>
+                <div className="col-3">
+                    {isLoggedIn ? (
+                        <button className="btn btn-primary col-6 d-md-flex" onClick={() => toggleAddAuction()}>Create new
+                    </button>) : null}
+
+                </div>
+            </div>
+            {isAddAuctionActive ? (
+                <Auction toggle={toggleAddAuction} onSave={addAuction}/>
+            ) : null}
             {isChatActive ? (
-                    <Chat auction={activeAuction} username={username} toggle={toggleChat}/>
-                ) : null}
+                <Chat auction={activeAuction} username={username} toggle={toggleChat}/>
+            ) : null}
+
             <table className="table table-striped">
                 <thead>
                 <tr>
@@ -118,8 +169,8 @@ function Auction({
                         <tr key={key}>
                             <td className='table-data'>{auction.title}</td>
                             <td className='table-data'>{auction.body}</td>
-                            <td className='table-data'>{auction.status}</td>
-                            <td className='table-data'>{auction.price}</td>
+                            <td className='table-data'>{FullStatus[auction.status]}</td>
+                            <td className='table-data'>${auction.price}</td>
                             <td className='table-data'>{auction.seller_name}</td>
                             {isLoggedIn ? (
                                 renderButtons(auction)
@@ -133,4 +184,4 @@ function Auction({
     );
 }
 
-export default Auction;
+export default Auctions;
