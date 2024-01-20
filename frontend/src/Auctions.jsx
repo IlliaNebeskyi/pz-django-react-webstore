@@ -23,32 +23,35 @@ function Auction({
         axios
             .patch("/api/auctions/cancel-auction/" + id + "/")
             .catch((error) => {
-                alert(error);
+                alert(error.response.data.error);
             })
             .then((res) => {
-                alert(res.data.message);
+                if (res)
+                    alert(res.data.message);
             });
     }
 
     const buyAuction = (id) => {
         axios
-            .patch("/api/auctions/buy/" + id + "/")
-            .catch(error => {
-                alert(error);
+            .patch("/api/auctions/buy/" + id)
+            .catch((error) => {
+                alert(error.response.data.error);
             })
-            .then(res => {
-                alert(res.data.message);
+            .then((res) => {
+                if (res)
+                    alert(res.data.message);
             });
     }
 
     const editAuction = (id) => {
         axios
             .patch("/api/auctions/edit-auction/" + id + "/")
-            .catch(error => {
-                alert(error);
+            .catch((error) => {
+                alert(error.response.data.error);
             })
-            .then(res => {
-                alert(res.data.message);
+            .then((res) => {
+                if (res)
+                    alert(res.data.message);
             });
     }
 
