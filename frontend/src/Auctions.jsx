@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
+import Chat from "./Chat";
 
 function Auction({
                      username,
                      isLoggedIn,
                  }) {
     const [auctions, setAuctions] = useState([]);
+    const [isChatActive, setIsChatActive] = useState(false);
+    const [activeAuction, setActiveAuction] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,8 +57,7 @@ function Auction({
                 <td className='table-data'>
                     <div className="row">
                         <button className="btn btn-primary col-4 d-md-flex"
-                                onClick={() => {
-                                }}>Chat
+                                onClick={() => {}}>Chat
                         </button>
                         <button className="btn btn-warning col-4 d-md-flex"
                                 onClick={() => editAuction(auction.id)}>Edit
@@ -68,8 +70,7 @@ function Auction({
             ) : (
                 <td className='table-data'>
                     <div className="row">
-                        <button className="btn btn-primary col-6 d-md-flex" onClick={() => {
-                        }}>Chat
+                        <button className="btn btn-primary col-6 d-md-flex" onClick={() => initChat(auction)}>Chat
                         </button>
                         <button className="btn btn-success col-6 d-md-flex" onClick={() => buyAuction(auction.id)}>Buy
                         </button>
@@ -79,9 +80,21 @@ function Auction({
         )
     }
 
+    const initChat = (auction) => {
+        setActiveAuction(auction);
+        toggleChat()
+    };
+
+    const toggleChat = () => {
+        setIsChatActive(!isChatActive);
+    };
+
     return (
         <div>
             <h1>List of auctions</h1>
+            {isChatActive ? (
+                    <Chat auction={activeAuction} username={username} toggle={toggleChat}/>
+                ) : null}
             <table className="table table-striped">
                 <thead>
                 <tr>
@@ -114,8 +127,7 @@ function Auction({
                 </tbody>
             </table>
         </div>
-    )
-        ;
+    );
 }
 
 export default Auction;

@@ -10,7 +10,7 @@ Modal.setAppElement('#root'); // Set the root element for accessibility
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState('');
     const [accessToken, setAccessToken] = useState("");
     const [activeItem, setActiveItem] = useState("");
 

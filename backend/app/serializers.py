@@ -33,9 +33,11 @@ class ChatSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    sender_name = serializers.CharField(source='sender.username', read_only=True)
+
     class Meta:
         model = models.Message
-        fields = ('id', 'chat', 'sender', 'message', 'created')
+        fields = ('id', 'chat', 'sender', 'message', 'created', 'sender_name')
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
