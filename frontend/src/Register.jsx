@@ -134,7 +134,7 @@ function Register({
             color="success"
             onClick={() => onSave(form)}
           >
-            Save
+            Register
           </Button>
         </ModalFooter>
       </Modal>

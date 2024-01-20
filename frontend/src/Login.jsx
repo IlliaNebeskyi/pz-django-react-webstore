@@ -64,7 +64,7 @@ export default function Login({
             color="success"
             onClick={() => onSave(form)}
           >
-            Save
+            Login
           </Button>
         </ModalFooter>
       </Modal>

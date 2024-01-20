@@ -19,9 +19,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class AuctionSerializer(serializers.ModelSerializer):
+    seller_name = serializers.CharField(source='seller.username', read_only=True)
+
     class Meta:
         model = models.Auction
-        fields = ('id', 'title', 'body', 'seller', 'buyer', 'status', 'price', 'created')
+        fields = ('id', 'title', 'body', 'seller', 'buyer', 'status', 'price', 'created', 'seller_name')
 
 
 class ChatSerializer(serializers.ModelSerializer):
