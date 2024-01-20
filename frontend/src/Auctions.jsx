@@ -23,7 +23,7 @@ function Auction({
                 alert(error);
             })
             .then((res) => {
-                alert("OK");
+                alert(res.data.message);
             });
     }
 
@@ -34,7 +34,7 @@ function Auction({
                 alert(error);
             })
             .then(res => {
-                alert("OK");
+                alert(res.data.message);
             });
     }
 
@@ -45,7 +45,7 @@ function Auction({
                 alert(error);
             })
             .then(res => {
-                alert("OK");
+                alert(res.data.message);
             });
     }
 

@@ -27,10 +27,12 @@ function App() {
             .catch(error => {
                 alert(error);
             })
-            .then(() => {
+            .then((res) => {
                 setIsLoggedIn(false);
                 setUsername('');
-                alert("Logged out!");
+                setAccessToken('');
+                axios.defaults.headers.common['Authorization'] = ''
+                alert(res.data.msg);
             });
     };
 
@@ -46,7 +48,7 @@ function App() {
                 setIsLoggedIn(true);
                 setUsername(form.username);
                 setAccessToken(res.data.access);
-                alert("Welcome!");
+                alert(res.data.msg);
             });
     };
 
@@ -58,8 +60,8 @@ function App() {
             .catch(error => {
                 alert(error);
             })
-            .then(() => {
-                alert("Registered new user!");
+            .then((res) => {
+                alert(res.data.msg);
             });
     };
 
