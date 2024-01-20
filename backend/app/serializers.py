@@ -27,9 +27,12 @@ class AuctionSerializer(serializers.ModelSerializer):
 
 
 class ChatSerializer(serializers.ModelSerializer):
+    auction_title = serializers.CharField(source='auction.title', read_only=True)
+    client_name = serializers.CharField(source='client.username', read_only=True)
+
     class Meta:
         model = models.Chat
-        fields = ('id', 'auction', 'client')
+        fields = ('id', 'auction', 'client', 'auction_title', 'client_name')
 
 
 class MessageSerializer(serializers.ModelSerializer):

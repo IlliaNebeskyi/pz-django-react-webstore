@@ -12,9 +12,9 @@ import {
 } from "reactstrap";
 
 export default function AddAuction({
-                                    toggle,
-    onSave
-                                }) {
+                                       toggle,
+                                       onSave
+                                   }) {
     const [form, setForm] = useState({
         title: "",
         body: "",
@@ -31,7 +31,6 @@ export default function AddAuction({
         }));
 
     };
-
 
 
     return (

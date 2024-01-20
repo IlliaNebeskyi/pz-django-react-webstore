@@ -12,10 +12,10 @@ import {
 } from "reactstrap";
 
 export default function EditAuction({
-    auction,
-    toggle,
-    onSave
-                                }) {
+                                        auction,
+                                        toggle,
+                                        onSave
+                                    }) {
     const [form, setForm] = useState({
         title: auction.title,
         body: auction.body,

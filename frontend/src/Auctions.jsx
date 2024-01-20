@@ -3,6 +3,7 @@ import axios from "axios";
 import Chat from "./Chat";
 import AddAuction from "./AddAuction";
 import EditAuction from "./EditAuction";
+import Chats from "./Chats";
 
 function Auctions({
                       username,
@@ -10,6 +11,7 @@ function Auctions({
                   }) {
     const [auctions, setAuctions] = useState([]);
     const [isChatActive, setIsChatActive] = useState(false);
+    const [isChatsActive, setIsChatsActive] = useState(false);
     const [isAddAuctionActive, setIsAddAuctionActive] = useState(false);
     const [isEditAuctionActive, setIsEditAuctionActive] = useState(false);
     const [activeAuction, setActiveAuction] = useState(false);
@@ -95,14 +97,10 @@ function Auctions({
         return (auction.seller_name === username ? (
                 <td className='table-data'>
                     <div className="row">
-                        <button className="btn btn-primary col-4 d-md-flex"
-                                onClick={() => {
-                                }}>Chat
-                        </button>
-                        <button className="btn btn-warning col-4 d-md-flex"
+                        <button className="btn btn-warning col-6 d-md-flex"
                                 onClick={() => initEditAuction(auction)}>Edit
                         </button>
-                        <button className="btn btn-danger col-4 d-md-flex"
+                        <button className="btn btn-danger col-6 d-md-flex"
                                 onClick={() => cancelAuction(auction.id)}>Cancel
                         </button>
                     </div>
@@ -129,6 +127,10 @@ function Auctions({
         setIsChatActive(!isChatActive);
     };
 
+    const toggleChats = () => {
+        setIsChatsActive(!isChatsActive);
+    };
+
     const toggleAddAuction = () => {
         setIsAddAuctionActive(!isAddAuctionActive);
     };
@@ -150,8 +152,15 @@ function Auctions({
                 </div>
                 <div className="col-3">
                     {isLoggedIn ? (
-                        <button className="btn btn-primary col-6 d-md-flex" onClick={() => toggleAddAuction()}>Create new
-                    </button>) : null}
+                        <div>
+                            <button className="btn btn-primary col-6 d-md-flex"
+                                    onClick={() => toggleAddAuction()}>Create new
+                            </button>
+                            <button className="btn btn-primary col-6 d-md-flex" onClick={() => toggleChats()}>Chat with
+                                clients
+                            </button>
+                        </div>
+                    ) : null}
                 </div>
             </div>
             {isAddAuctionActive ? (
@@ -162,6 +171,9 @@ function Auctions({
             ) : null}
             {isChatActive ? (
                 <Chat auction={activeAuction} username={username} toggle={toggleChat}/>
+            ) : null}
+            {isChatsActive ? (
+                <Chats auction={activeAuction} username={username} toggle={toggleChats}/>
             ) : null}
 
             <table className="table table-striped">
