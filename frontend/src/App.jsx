@@ -11,7 +11,10 @@ Modal.setAppElement('#root'); // Set the root element for accessibility
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState("");
+    const [accessToken, setAccessToken] = useState("");
     const [activeItem, setActiveItem] = useState("");
+
+    axios.defaults.headers.common['Authorization'] = accessToken ? `Bearer ${accessToken}` : '';
 
     const isActiveItem = (item) => {
         return item === activeItem;
@@ -31,19 +34,6 @@ function App() {
             });
     };
 
-    const cancelAuction = (id) => {
-        axios
-            .post("/api/logout")
-            .catch(error => {
-                alert(error);
-            })
-            .then(() => {
-                setIsLoggedIn(false);
-                setUsername('');
-                alert("Logged out!");
-            });
-    }
-
     const handleLogin = (form) => {
         toggle("Login");
 
@@ -52,9 +42,10 @@ function App() {
             .catch(error => {
                 alert(error);
             })
-            .then(() => {
+            .then((res) => {
                 setIsLoggedIn(true);
                 setUsername(form.username);
+                setAccessToken(res.data.access);
                 alert("Welcome!");
             });
     };
@@ -96,7 +87,8 @@ function App() {
                                         <>
                                             <button className="btn btn-primary" onClick={() => toggle("Login")}>Login
                                             </button>
-                                            <button className="btn btn-primary" onClick={() => toggle("Register")}>Register
+                                            <button className="btn btn-primary"
+                                                    onClick={() => toggle("Register")}>Register
                                             </button>
                                         </>
                                     )}
@@ -113,7 +105,7 @@ function App() {
             <div className="row">
                 <div className="col-md-6 col-sm-10 col-lg-10 mx-auto p-0">
                     <div className="card p-3">
-                        <Auction username={username}/>
+                        <Auction username={username} isLoggedIn={isLoggedIn}/>
                     </div>
                 </div>
             </div>
