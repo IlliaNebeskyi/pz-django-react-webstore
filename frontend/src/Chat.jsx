@@ -18,11 +18,13 @@ import moment from 'moment';
 function Chat({
                   auction,
                   username,
-                  toggle
+                  toggle,
+                  clientId
               }) {
     const [messages, setMessages] = useState([]);
     const [form, setForm] = useState({
         message: "",
+        client_id: clientId
     });
 
     const handleChange = (e) => {
@@ -43,7 +45,7 @@ function Chat({
 
     const refreshMessages = () => {
         axios
-            .get('api/chats/auctions/' + auction.id + "/")
+            .get('api/chats/auctions/' + auction.id + "/?client_id=" + clientId)
             .then(res => {
                 const data = res.data;
                 setMessages(data)
@@ -58,8 +60,8 @@ function Chat({
             })
             .then(() => {
                 refreshMessages();
+                setForm({'message': ''})
             });
-
     }
 
 
@@ -76,7 +78,8 @@ function Chat({
                                         {message.sender_name === username ? (
                                             <div className="float-right">
                                                 <div className="message-data">
-                                                    <span className="message-data-time">{moment(message.created).format("dddd, MMM DD HH:mm A")}</span>
+                                                    <span
+                                                        className="message-data-time">{moment(message.created).format("dddd, MMM DD HH:mm A")}</span>
                                                 </div>
                                                 <div className="message my-message float-right">{message.message}</div>
                                             </div>
@@ -84,7 +87,8 @@ function Chat({
                                         ) : (
                                             <div>
                                                 <div className="message-data">
-                                                    <span className="message-data-time">{moment(message.created).format("dddd, MMM DD HH:mm A")}</span>
+                                                    <span
+                                                        className="message-data-time">{moment(message.created).format("dddd, MMM DD HH:mm A")}</span>
                                                 </div>
                                                 <div className="message other-message">{message.message}</div>
                                             </div>
@@ -111,17 +115,17 @@ function Chat({
                                 />
                             </FormGroup>
                         </Form>
-                        </div>
-                        <div className="col-2">
-                            <Button color="success" onClick={() => sendMessage(form)}>Send</Button>
-                        </div>
-                        <div className="col-2">
-                            <Button onClick={() => toggle()}>Exit</Button>
-                        </div>
                     </div>
+                    <div className="col-2">
+                        <Button color="success" onClick={() => sendMessage(form)}>Send</Button>
+                    </div>
+                    <div className="col-2">
+                        <Button onClick={() => toggle()}>Exit</Button>
+                    </div>
+                </div>
             </ModalFooter>
         </Modal>
-);
+    );
 }
 
 export default Chat;
