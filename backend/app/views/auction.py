@@ -15,6 +15,7 @@ User = get_user_model()
 # used_permission_classes = []
 used_permission_classes = [IsAuthenticated]
 
+
 class BuyView(APIView):
     permission_classes = used_permission_classes
 
@@ -69,6 +70,7 @@ class AddAuctionView(APIView):
             log.error(e)
             return Response({'error': 'Something went wrong'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class EditAuctionView(APIView):
     permission_classes = used_permission_classes
 
@@ -85,6 +87,27 @@ class EditAuctionView(APIView):
             auction.save()
 
             return Response({'message': 'Auction updated successfully'}, status=status.HTTP_200_OK)
+
+        except models.Auction.DoesNotExist:
+            return Response({'error': 'Auction not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            log.error(e)
+
+
+class CancelAuctionView(APIView):
+    permission_classes = used_permission_classes
+
+    def patch(self, request, auction_id):
+        try:
+            auction = models.Auction.objects.get(id=auction_id)
+
+            if auction.seller.id != request.user.id:
+                return Response({'error': 'You do not have permission to cancel this auction'}, status=status.HTTP_403_FORBIDDEN)
+
+            setattr(auction, 'status', request.data['CA'])
+            auction.save()
+
+            return Response({'message': 'Auction canceled successfully'}, status=status.HTTP_200_OK)
 
         except models.Auction.DoesNotExist:
             return Response({'error': 'Auction not found'}, status=status.HTTP_404_NOT_FOUND)
