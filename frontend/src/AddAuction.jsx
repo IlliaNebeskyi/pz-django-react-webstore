@@ -11,7 +11,7 @@ import {
     Label,
 } from "reactstrap";
 
-export default function Auction({
+export default function AddAuction({
                                     toggle,
     onSave
                                 }) {

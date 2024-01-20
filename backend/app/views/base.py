@@ -36,8 +36,8 @@ class MessageView(viewsets.ModelViewSet):
 #         auction_id = request.data['auction_id']
 #         buyer_id = request.data['buyer_id']
 #
-#         auction = models.Auction.objects.get(auction_id=auction_id)
-#         buyer = models.Auction.objects.get(auction_id=buyer_id)
+#         auction = models.AddAuction.objects.get(auction_id=auction_id)
+#         buyer = models.AddAuction.objects.get(auction_id=buyer_id)
 #         auction.status = 'FI'
 #         auction.buyer = buyer
 #

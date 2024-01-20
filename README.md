@@ -4,7 +4,7 @@
 - Nebeskyi Illia  
 
 #### Project Goal:  
-Creation of a web application - Auction Portal
+Creation of a web application - AddAuction Portal
 
 ---
 

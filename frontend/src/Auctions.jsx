@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import Chat from "./Chat";
-import Auction from "./Auction";
+import AddAuction from "./AddAuction";
+import EditAuction from "./EditAuction";
 
 function Auctions({
                       username,
@@ -10,6 +11,7 @@ function Auctions({
     const [auctions, setAuctions] = useState([]);
     const [isChatActive, setIsChatActive] = useState(false);
     const [isAddAuctionActive, setIsAddAuctionActive] = useState(false);
+    const [isEditAuctionActive, setIsEditAuctionActive] = useState(false);
     const [activeAuction, setActiveAuction] = useState(false);
 
     useEffect(() => {
@@ -46,6 +48,7 @@ function Auctions({
                 if (res)
                     alert(res.data.message);
                 refreshAuctions();
+                toggleAddAuction();
             });
     }
 
@@ -74,16 +77,17 @@ function Auctions({
             });
     }
 
-    const editAuction = (id) => {
+    const editAuction = (form) => {
         axios
-            .patch("/api/auctions/edit-auction/" + id + "/")
+            .patch("/api/auctions/edit-auction/" + activeAuction.id + "/", form)
             .catch((error) => {
                 alert(error.response.data.error);
             })
             .then((res) => {
                 if (res)
                     alert(res.data.message);
-                refreshAuctions()
+                refreshAuctions();
+                toggleEditAuction();
             });
     }
 
@@ -96,7 +100,7 @@ function Auctions({
                                 }}>Chat
                         </button>
                         <button className="btn btn-warning col-4 d-md-flex"
-                                onClick={() => editAuction(auction.id)}>Edit
+                                onClick={() => initEditAuction(auction)}>Edit
                         </button>
                         <button className="btn btn-danger col-4 d-md-flex"
                                 onClick={() => cancelAuction(auction.id)}>Cancel
@@ -129,6 +133,15 @@ function Auctions({
         setIsAddAuctionActive(!isAddAuctionActive);
     };
 
+    const initEditAuction = (auction) => {
+        setActiveAuction(auction);
+        toggleEditAuction()
+    };
+
+    const toggleEditAuction = () => {
+        setIsEditAuctionActive(!isEditAuctionActive);
+    };
+
     return (
         <div>
             <div className="row">
@@ -139,11 +152,13 @@ function Auctions({
                     {isLoggedIn ? (
                         <button className="btn btn-primary col-6 d-md-flex" onClick={() => toggleAddAuction()}>Create new
                     </button>) : null}
-
                 </div>
             </div>
             {isAddAuctionActive ? (
-                <Auction toggle={toggleAddAuction} onSave={addAuction}/>
+                <AddAuction toggle={toggleAddAuction} onSave={addAuction}/>
+            ) : null}
+            {isEditAuctionActive ? (
+                <EditAuction auction={activeAuction} toggle={toggleEditAuction} onSave={editAuction}/>
             ) : null}
             {isChatActive ? (
                 <Chat auction={activeAuction} username={username} toggle={toggleChat}/>
