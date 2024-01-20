@@ -24,22 +24,22 @@ class BuyView(APIView):
             auction = models.Auction.objects.get(pk=auction_id)
 
             if auction.seller == request.user:
-                return Response({'msg': 'Seller cannot buy their own auction'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Seller cannot buy their own auction'}, status=status.HTTP_400_BAD_REQUEST)
 
             if auction.status != models.Auction.Status.ACTIVE:
-                return Response({'msg': 'Auction is not active'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Auction is not active'}, status=status.HTTP_400_BAD_REQUEST)
 
             with transaction.atomic():
                 auction.status = models.Auction.Status.FINISHED
                 auction.buyer = request.user
                 auction.save()
 
-            return Response({'msg': 'Auction finished successfully'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Auction finished successfully'}, status=status.HTTP_200_OK)
 
         except models.Auction.DoesNotExist:
-            return Response({'msg': 'Auction not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Auction not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            return Response({'msg': f'Error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': f'Error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
 class AddAuctionView(APIView):
