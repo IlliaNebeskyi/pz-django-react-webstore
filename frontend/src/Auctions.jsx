@@ -1,144 +1,57 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-} from "reactstrap";
+import React, {useState, useEffect} from 'react';
 
-function Register({
-    onSave,
-    toggle,
-}) {const [form, setForm] = useState({
-      email: "",
-      username: "",
-      password: "",
-      password2: "",
-      city: "",
-      street: "",
-      street_number: "",
-      bank_number: ""
-  });
+function Auction({
+                     username,
+                 }) {
+    const [auctions, setAuctions] = useState([]);
 
-  const handleChange = (e) => {
-    let { name, value } = e.target;
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('/api/auctions');
+            const data = await response.json();
+            setAuctions(data)
+        };
+        fetchData();
+    }, []);
 
-    setForm(prevForm => ({
-        ...prevForm,
-        [name]: value
-    }));
-  };
-
-  return (
-      <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Register</ModalHeader>
-        <ModalBody>
-          <Form>
-            <FormGroup>
-              <Label for="user-email">Email</Label>
-              <Input
-                type="text"
-                id="user-email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="Enter Email"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="user-username">Username</Label>
-              <Input
-                type="text"
-                id="user-username"
-                name="username"
-                value={form.username}
-                onChange={handleChange}
-                placeholder="Enter username"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="user-password">Password</Label>
-              <Input
-                type="text"
-                id="user-password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="Enter password"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="user-password2">Password2</Label>
-              <Input
-                type="text"
-                id="user-password2"
-                name="password2"
-                value={form.password2}
-                onChange={handleChange}
-                placeholder="Enter password again"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="user-city">City</Label>
-              <Input
-                type="text"
-                id="user-city"
-                name="city"
-                value={form.city}
-                onChange={handleChange}
-                placeholder="City"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="user-street">Street</Label>
-              <Input
-                type="text"
-                id="user-street"
-                name="street"
-                value={form.street}
-                onChange={handleChange}
-                placeholder="Enter Street"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="user-street_number">Street number</Label>
-              <Input
-                type="text"
-                id="user-street_number"
-                name="street_number"
-                value={form.street_number}
-                onChange={handleChange}
-                placeholder="Enter Street number"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="user-password2">Bank number</Label>
-              <Input
-                type="text"
-                id="user-bank_number"
-                name="bank_number"
-                value={form.bank_number}
-                onChange={handleChange}
-                placeholder="Enter bank number"
-              />
-            </FormGroup>
-          </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="success"
-            onClick={() => onSave(form)}
-          >
-            Save
-          </Button>
-        </ModalFooter>
-      </Modal>
-    );
+    return (
+        <div>
+            <h1>List of auctions</h1>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Desc</th>
+                    <th>Status</th>
+                    <th>Price</th>
+                    <th>Seller</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    auctions.map((auction, key) =>
+                        <tr key={key}>
+                            <td className='table-data'>{auction.title}</td>
+                            <td className='table-data'>{auction.body}</td>
+                            <td className='table-data'>{auction.status}</td>
+                            <td className='table-data'>{auction.price}</td>
+                            <td className='table-data'>{auction.seller_name}</td>
+                            <td className='table-data'>Chat button</td>
+                            {auction.seller_name === username ? (
+                                <td className='table-data'>Cancel button</td>
+                            ) : (
+                                <td className='table-data'>Buy button</td>
+                            )}
+                        </tr>
+                    )
+                }
+                </tbody>
+            </table>
+        </div>
+    )
+        ;
 }
 
-export default Register;
+export default Auction;
