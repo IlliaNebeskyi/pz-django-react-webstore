@@ -66,7 +66,7 @@ class ListChatMessagesView(APIView):
                     return Response({'error': 'Chat not found'}, status=404)
             else:
                 try:
-                    chat = models.Chat.objects.get(auction=auction, client=request.user)
+                    chat, _ = models.Chat.objects.get_or_create(auction=auction, client=request.user)
                 except models.Chat.DoesNotExist:
                     return Response({'error': 'Chat not found'}, status=404)
 
@@ -88,7 +88,7 @@ class SendMessageView(APIView):
             auction = models.Auction.objects.get(pk=auction_id)
 
             if request.user != auction.seller:
-                chat, created = models.Chat.objects.get_or_create(auction=auction, client=request.user)
+                chat, _ = models.Chat.objects.get_or_create(auction=auction, client=request.user)
             else:
                 try:
                     client_id = request.data.get('client_id')

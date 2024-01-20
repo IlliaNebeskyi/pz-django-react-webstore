@@ -11,7 +11,7 @@ from app.logs import setup_logging
 log = setup_logging(__name__)
 
 User = get_user_model()
-# used_permission_classes = []
+
 used_permission_classes = [IsAuthenticated]
 
 
@@ -103,8 +103,9 @@ class CancelAuctionView(APIView):
             if auction.seller.id != request.user.id:
                 return Response({'error': 'You do not have permission to cancel this auction'}, status=status.HTTP_403_FORBIDDEN)
 
-            setattr(auction, 'status', 'CA')
-            auction.save()
+            with transaction.atomic():
+                auction.status = models.Auction.Status.CANCELED
+                auction.save()
 
             return Response({'message': 'Auction canceled successfully'}, status=status.HTTP_200_OK)
 
