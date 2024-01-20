@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_83z!nhf+4!qv5-n-qvf5fa83e@#wsn3&@+d4=sc@aqxnj(@bl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['host.docker.internal', 'localhost']
+ALLOWED_HOSTS = ['host.docker.internal', 'localhost', 'backend']
 
 
 # Application definition
@@ -144,7 +144,7 @@ CORS_ORIGIN_WHITELIST = [
      'http://host.docker.internal:3000'
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://host.docker.internal:8000']
+CSRF_TRUSTED_ORIGINS = ['http://host.docker.internal:8000', 'http://localhost:8000']
 
 LOGGING = {
     "version": 1,
