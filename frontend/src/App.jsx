@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import Login from './Login';
 import Register from './Register';
 import axios from "axios";
+import Auction from "./Auctions";
 
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
@@ -11,16 +12,6 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState("");
     const [activeItem, setActiveItem] = useState("");
-    const [auctions, setAuctions] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch('/api/auctions');
-            const data = await response.json();
-            setAuctions(data)
-        };
-        fetchData();
-    }, []);
 
     const isActiveItem = (item) => {
         return item === activeItem;
@@ -122,39 +113,7 @@ function App() {
             <div className="row">
                 <div className="col-md-6 col-sm-10 col-lg-10 mx-auto p-0">
                     <div className="card p-3">
-                        <h1>List of auctions</h1>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Desc</th>
-                                <th>Status</th>
-                                <th>Price</th>
-                                <th>Seller</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                auctions.map((auction, key) =>
-                                    <tr key={key}>
-                                        <td className='table-data'>{auction.title}</td>
-                                        <td className='table-data'>{auction.body}</td>
-                                        <td className='table-data'>{auction.status}</td>
-                                        <td className='table-data'>{auction.price}</td>
-                                        <td className='table-data'>{auction.seller_name}</td>
-                                        <td className='table-data'>Chat button</td>
-                                        {auction.seller_name === username ? (
-                                        <td className='table-data'>Cancel button</td>
-                                            ) : (
-                                        <td className='table-data'>Buy button</td>
-                                            )}
-                                    </tr>
-                                )
-                            }
-                            </tbody>
-                        </table>
+                        <Auction username={username}/>
                     </div>
                 </div>
             </div>
@@ -162,5 +121,4 @@ function App() {
     );
 }
 
-//<td className='table-data'><img width='20px' height='10px' src={country.media.flag} alt="flag"/></td>
 export default App;
