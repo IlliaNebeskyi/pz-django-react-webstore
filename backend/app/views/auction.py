@@ -104,7 +104,7 @@ class CancelAuctionView(APIView):
             if auction.seller.id != request.user.id:
                 return Response({'error': 'You do not have permission to cancel this auction'}, status=status.HTTP_403_FORBIDDEN)
 
-            setattr(auction, 'status', request.data['CA'])
+            setattr(auction, 'status', 'CA')
             auction.save()
 
             return Response({'message': 'Auction canceled successfully'}, status=status.HTTP_200_OK)
