@@ -12,6 +12,7 @@ from app.logs import setup_logging
 
 log = setup_logging(__name__)
 
+
 class ListChatsView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -42,6 +43,7 @@ class ListChatsView(APIView):
 #             return Response({'error': 'Auction not found'}, status=404)
 #         except Exception as e:
 #             return Response({'error': str(e)}, status=500)
+
 
 class ListChatMessagesView(APIView):
     permission_classes = [IsAuthenticated]
