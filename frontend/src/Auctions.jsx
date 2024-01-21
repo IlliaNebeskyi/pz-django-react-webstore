@@ -114,8 +114,6 @@ function Auctions({
         return auctions
             .filter(auction => {
                 const price = parseFloat(auction.price.replace('$', ''));
-                console.log(appliedFilters.nameFilter)
-                console.log(appliedFilters.seller)
                 return (
                     price >= appliedFilters.priceRange[0] &&
                     price <= appliedFilters.priceRange[1] &&

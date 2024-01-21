@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     Button,
     Modal,
@@ -12,9 +12,9 @@ import {
 } from "reactstrap";
 
 function Register({
-                      onSave,
-                      toggle,
-                  }) {
+    onSave,
+    toggle,
+}) {
     const [form, setForm] = useState({
         email: "",
         username: "",
@@ -27,7 +27,7 @@ function Register({
     });
 
     const handleChange = (e) => {
-        let {name, value} = e.target;
+        let { name, value } = e.target;
 
         setForm(prevForm => ({
             ...prevForm,
@@ -65,7 +65,7 @@ function Register({
                     <FormGroup>
                         <Label for="user-password">Password</Label>
                         <Input
-                            type="text"
+                            type="password"
                             id="user-password"
                             name="password"
                             value={form.password}
@@ -76,7 +76,7 @@ function Register({
                     <FormGroup>
                         <Label for="user-password2">Password2</Label>
                         <Input
-                            type="text"
+                            type="password"
                             id="user-password2"
                             name="password2"
                             value={form.password2}
