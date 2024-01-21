@@ -4,6 +4,7 @@ import Chat from "./Chat";
 import AddAuction from "./AddAuction";
 import EditAuction from "./EditAuction";
 import Chats from "./Chats";
+import FilterPopup from './FilterPopup';
 
 function Auctions({
     username,
@@ -15,8 +16,17 @@ function Auctions({
     const [isAddAuctionActive, setIsAddAuctionActive] = useState(false);
     const [isEditAuctionActive, setIsEditAuctionActive] = useState(false);
     const [activeAuction, setActiveAuction] = useState(false);
+    const [maxPrice, setMaxPrice] = useState(0);
     const [sortField, setSortField] = useState('price');
     const [sortDirection, setSortDirection] = useState('asc');
+    const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
+    const [appliedFilters, setAppliedFilters] = useState({
+        nameFilter: '',
+        priceRange: [0, maxPrice],
+        selectedStatuses: [],
+        seller: '',
+    });
+
 
 
     useEffect(() => {
@@ -40,8 +50,12 @@ function Auctions({
             .then(res => {
                 const data = res.data;
                 setAuctions(data)
+                const max = Math.max(...data.map(a => a.price));
+                setMaxPrice(max);
+                applyFilters({ ...appliedFilters, priceRange: [0, max] })
             });
     }
+
 
     const addAuction = (form) => {
         axios
@@ -96,12 +110,33 @@ function Auctions({
             });
     }
 
-    const sortAuctions = () => {
-        return [...auctions].sort((a, b) => {
+    const filterAuctions = () => {
+        return auctions
+            .filter(auction => {
+                const price = parseFloat(auction.price.replace('$', ''));
+                console.log(appliedFilters.nameFilter)
+                console.log(appliedFilters.seller)
+                return (
+                    price >= appliedFilters.priceRange[0] &&
+                    price <= appliedFilters.priceRange[1] &&
+                    (appliedFilters.selectedStatuses.length === 0 || appliedFilters.selectedStatuses.includes(auction.status)) &&
+                    auction.seller_name.toLowerCase().includes(appliedFilters.seller.toLowerCase()) &&
+                    auction.title.toLowerCase().includes(appliedFilters.nameFilter.toLowerCase())
+                );
+            })
+    };
+
+    const applyFilters = (filters) => {
+        setAppliedFilters(filters);
+    };
+
+
+
+    const sortAuctions = (auctionsToSort) => {
+        return [...auctionsToSort].sort((a, b) => {
             let aValue = a[sortField];
             let bValue = b[sortField];
 
-            // Check if the sort field is 'price' and convert to float for comparison
             if (sortField === 'price') {
                 aValue = parseFloat(aValue.replace('$', ''));
                 bValue = parseFloat(bValue.replace('$', ''));
@@ -182,7 +217,12 @@ function Auctions({
         setIsEditAuctionActive(!isEditAuctionActive);
     };
 
-    const sortedAuctions = sortAuctions();
+    const filteredAndSortedAuctions = () => {
+        const filtered = filterAuctions();
+        return sortAuctions(filtered);
+    };
+
+    const sortedAuctions = filteredAndSortedAuctions();
 
     return (
         <div>
@@ -215,6 +255,15 @@ function Auctions({
             {isChatsActive ? (
                 <Chats auction={activeAuction} username={username} toggle={toggleChats} />
             ) : null}
+
+            <button onClick={() => setIsFilterPopupOpen(true)}>Filter Auctions</button>
+
+            <FilterPopup
+                isOpen={isFilterPopupOpen}
+                onClose={() => setIsFilterPopupOpen(false)}
+                onApplyFilters={applyFilters}
+                maxPrice={maxPrice}
+            />
 
             <table className="table table-striped">
                 <thead>
