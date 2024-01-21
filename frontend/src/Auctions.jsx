@@ -63,6 +63,7 @@ function Auctions({
             .then((res) => {
                 if (res)
                     alert(res.data.message);
+                refreshAuctions()
             });
     }
 
