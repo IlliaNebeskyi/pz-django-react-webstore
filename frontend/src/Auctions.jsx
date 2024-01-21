@@ -234,8 +234,8 @@ function Auctions({
                             <button className="btn btn-primary col-6 d-md-flex"
                                 onClick={() => toggleAddAuction()}>Create new
                             </button>
-                            <button className="btn btn-primary col-6 d-md-flex" onClick={() => toggleChats()}>Chat with
-                                clients
+                            <button className="btn btn-primary col-6 d-md-flex" onClick={() => toggleChats()}>
+                                My chats
                             </button>
                         </div>
                     ) : null}
