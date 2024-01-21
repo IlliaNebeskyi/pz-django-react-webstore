@@ -85,10 +85,10 @@ class EditAuctionView(APIView):
                     setattr(auction, field, request.data[field])
             auction.save()
 
-            return Response({'message': 'AddAuction updated successfully'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Auction updated successfully'}, status=status.HTTP_200_OK)
 
         except models.Auction.DoesNotExist:
-            return Response({'error': 'AddAuction not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Auction not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             log.error(e)
 
@@ -107,9 +107,9 @@ class CancelAuctionView(APIView):
                 auction.status = models.Auction.Status.CANCELED
                 auction.save()
 
-            return Response({'message': 'AddAuction canceled successfully'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Auction canceled successfully'}, status=status.HTTP_200_OK)
 
         except models.Auction.DoesNotExist:
-            return Response({'error': 'AddAuction not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Auction not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             log.error(e)
