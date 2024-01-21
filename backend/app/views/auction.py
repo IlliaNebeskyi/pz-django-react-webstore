@@ -27,17 +27,17 @@ class BuyView(APIView):
                 return Response({'error': 'Seller cannot buy their own auction'}, status=status.HTTP_400_BAD_REQUEST)
 
             if auction.status != models.Auction.Status.ACTIVE:
-                return Response({'error': 'AddAuction is not active'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Auction is not active'}, status=status.HTTP_400_BAD_REQUEST)
 
             with transaction.atomic():
                 auction.status = models.Auction.Status.FINISHED
                 auction.buyer = request.user
                 auction.save()
 
-            return Response({'message': 'AddAuction finished successfully'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Auction finished successfully'}, status=status.HTTP_200_OK)
 
         except models.Auction.DoesNotExist:
-            return Response({'error': 'AddAuction not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Auction not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': f'Error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
@@ -61,7 +61,7 @@ class AddAuctionView(APIView):
                 seller=request.user
             )
 
-            return Response({'message': 'AddAuction created successfully', 'auction_id': auction.id}, status=status.HTTP_201_CREATED)
+            return Response({'message': 'Auction created successfully', 'auction_id': auction.id}, status=status.HTTP_201_CREATED)
 
         except KeyError:
             return Response({'error': 'Invalid or missing data'}, status=status.HTTP_400_BAD_REQUEST)

@@ -40,7 +40,7 @@ class ListChatsView(APIView):
 #             return Response(serializer.data)
 
 #         except models.AddAuction.DoesNotExist:
-#             return Response({'error': 'AddAuction not found'}, status=404)
+#             return Response({'error': 'Auction not found'}, status=404)
 #         except Exception as e:
 #             return Response({'error': str(e)}, status=500)
 
@@ -77,7 +77,7 @@ class ListChatMessagesView(APIView):
             return Response(serializer.data)
 
         except models.Auction.DoesNotExist:
-            return Response({'error': 'AddAuction not found'}, status=404)
+            return Response({'error': 'Auction not found'}, status=404)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
 
@@ -112,7 +112,7 @@ class SendMessageView(APIView):
             return Response(serializers.MessageSerializer(message).data, status=201)
 
         except models.Auction.DoesNotExist:
-            return Response({'error': 'AddAuction not found'}, status=404)
+            return Response({'error': 'Auction not found'}, status=404)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
 
