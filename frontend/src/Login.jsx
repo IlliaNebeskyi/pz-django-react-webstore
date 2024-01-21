@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     Button,
     Modal,
@@ -12,16 +12,16 @@ import {
 } from "reactstrap";
 
 export default function Login({
-                                  onSave,
-                                  toggle,
-                              }) {
+    onSave,
+    toggle,
+}) {
     const [form, setForm] = useState({
         username: "",
         password: ""
     });
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setForm(prevForm => ({
             ...prevForm,
@@ -49,7 +49,7 @@ export default function Login({
                     <FormGroup>
                         <Label for="user-password">Password</Label>
                         <Input
-                            type="text"
+                            type="password"
                             id="user-password"
                             name="password"
                             value={form.password}
