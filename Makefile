@@ -47,6 +47,7 @@ init: docker-rm
 	#
 	# create super user
 	#
-	docker exec backend python manage.py createsuperuser --noinput # http://localhost:8000/admin/
+	# docker exec backend python manage.py createsuperuser --noinput # http://localhost:8000/admin/
 
 	docker-compose up -d frontend
+	docker-compose up -d nginx
