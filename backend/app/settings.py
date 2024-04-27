@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_83z!nhf+4!qv5-n-qvf5fa83e@#wsn3&@+d4=sc@aqxnj(@bl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['host.docker.internal', 'localhost', 'backend']
+ALLOWED_HOSTS = ['host.docker.internal', 'localhost', 'backend', 'lightheaded.ddns.net']
 
 
 # Application definition
@@ -141,10 +141,11 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
-     'http://host.docker.internal:3000'
+     'http://host.docker.internal:3000',
+     'http://lightheaded.ddns.net:3000'
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://host.docker.internal:8000', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = ['http://host.docker.internal:8000', 'http://localhost:8000', 'http://lightheaded.ddns.net:3000']
 
 LOGGING = {
     "version": 1,
