@@ -32,6 +32,9 @@ docker-rm: # Remove running containers
 	if [ $(shell docker ps -a -q -f name=backend | wc -l ) -gt 0 ]; then \
 		docker rm backend -f; \
 	fi
+	if [ $(shell docker ps -a -q -f name=nginx | wc -l ) -gt 0 ]; then \
+		docker rm nginx -f; \
+	fi
 	docker volume prune -f
 
 init: docker-rm
