@@ -142,10 +142,11 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
      'http://host.docker.internal:3000',
+     'http://frontend:3000',
      'http://lightheaded.ddns.net:3000'
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://host.docker.internal:8000', 'http://localhost:8000', 'http://lightheaded.ddns.net:3000']
+CSRF_TRUSTED_ORIGINS = ['http://backend:8000']
 
 LOGGING = {
     "version": 1,
