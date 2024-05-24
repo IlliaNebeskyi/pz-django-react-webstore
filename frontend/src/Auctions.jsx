@@ -253,22 +253,22 @@ function Auctions({
             <div className="table-responsive">
                 <table className={isMobile ? "table" : "table table-striped"}>
                     <thead>
-                        <tr>
-                            <th onClick={() => onHeaderClick('title')}>Name{renderSortIcon('title')}</th>
-                            <th onClick={() => onHeaderClick('body')}>Desc{renderSortIcon('body')}</th>
-                            <th onClick={() => onHeaderClick('status')}>Status{renderSortIcon('status')}</th>
-                            <th onClick={() => onHeaderClick('price')}>Price{renderSortIcon('price')}</th>
-                            {isMobile ? null : (
-                                <>
-                                <th onClick={() => onHeaderClick('seller_name')}>Seller{renderSortIcon('seller_name')}</th>
+                    <tr>
+                        <th onClick={() => onHeaderClick('title')}>Name{renderSortIcon('title')}</th>
+                        {!isMobile && <th onClick={() => onHeaderClick('body')}>Desc{renderSortIcon('body')}</th>}
+                        <th onClick={() => onHeaderClick('status')}>Status{renderSortIcon('status')}</th>
+                        <th onClick={() => onHeaderClick('price')}>Price{renderSortIcon('price')}</th>
+                        <th onClick={() => onHeaderClick('seller_name')}>Seller{renderSortIcon('seller_name')}</th>
+                        {isMobile ? null : (
+                            <>
                                 {isLoggedIn && <th>Options</th>}
-                                </>
-                            )
-                            }
-                        </tr>
+                            </>
+                        )
+                        }
+                    </tr>
                     </thead>
                     <tbody>
-                         {isMobile ? (
+                    {isMobile ? (
 
                             sortedAuctions.map((auction, key) => <>
                                 <tr key={key}>
