@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'auctiondb',
         'USER': 'auctionuser',
         'PASSWORD': 'auctionpassword',
-        'HOST': 'host.docker.internal',
+        'HOST': 'db',
         'PORT': '3306',
     }
 }

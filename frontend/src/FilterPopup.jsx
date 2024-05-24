@@ -66,6 +66,7 @@ function FilterPopup({ isOpen, onClose, onApplyFilters, maxPrice }) {
             <div className="filter-row">
                 <label>Status:</label>
                 {Object.entries(FullStatus).map(([code, label]) => (
+                    <div className="filter-row">
                     <label key={code}>
                         <input
                             type="checkbox"
@@ -74,6 +75,7 @@ function FilterPopup({ isOpen, onClose, onApplyFilters, maxPrice }) {
                         />
                         {label}
                     </label>
+                    </div>
                 ))}
             </div>
             <div className="filter-row">

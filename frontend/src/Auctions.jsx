@@ -5,6 +5,8 @@ import AddAuction from "./AddAuction";
 import EditAuction from "./EditAuction";
 import Chats from "./Chats";
 import FilterPopup from './FilterPopup';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {isMobile} from 'react-device-detect';
 
 function Auctions({
     username,
@@ -26,8 +28,6 @@ function Auctions({
         selectedStatuses: [],
         seller: '',
     });
-
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,7 +55,6 @@ function Auctions({
                 applyFilters({ ...appliedFilters, priceRange: [0, max] })
             });
     }
-
 
     const addAuction = (form) => {
         axios
@@ -129,8 +128,6 @@ function Auctions({
         setAppliedFilters(filters);
     };
 
-
-
     const sortAuctions = (auctionsToSort) => {
         return [...auctionsToSort].sort((a, b) => {
             let aValue = a[sortField];
@@ -164,26 +161,19 @@ function Auctions({
         return sortField === field ? (sortDirection === 'asc' ? ' ↑' : ' ↓') : '';
     };
 
-
     function renderButtons(auction) {
         return (auction.seller_name === username ? (
             <td className='table-data'>
-                <div className="row">
-                    <button className="btn btn-warning col-6 d-md-flex"
-                        onClick={() => initEditAuction(auction)}>Edit
-                    </button>
-                    <button className="btn btn-danger col-6 d-md-flex"
-                        onClick={() => cancelAuction(auction.id)}>Cancel
-                    </button>
+                <div className="d-flex justify-content-between">
+                    <button className="btn btn-warning btn-sm" onClick={() => initEditAuction(auction)}>Edit</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => cancelAuction(auction.id)}>Cancel</button>
                 </div>
             </td>
         ) : (
             <td className='table-data'>
-                <div className="row">
-                    <button className="btn btn-primary col-6 d-md-flex" onClick={() => initChat(auction)}>Chat
-                    </button>
-                    <button className="btn btn-success col-6 d-md-flex" onClick={() => buyAuction(auction.id)}>Buy
-                    </button>
+                <div className="d-flex justify-content-between">
+                    <button className="btn btn-primary btn-sm" onClick={() => initChat(auction)}>Chat</button>
+                    <button className="btn btn-success btn-sm" onClick={() => buyAuction(auction.id)}>Buy</button>
                 </div>
             </td>
         )
@@ -224,20 +214,16 @@ function Auctions({
     const sortedAuctions = filteredAndSortedAuctions();
 
     return (
-        <div>
-            <div className="row">
-                <div className="col-9">
+        <div className="container mt-5">
+            <div className="row mb-3">
+                <div className="col-md-12 col-lg-12">
                     <h1>List of auctions</h1>
                 </div>
-                <div className="col-3">
+                <div className="col-md-12 col-lg-12 text-md-right text-center">
                     {isLoggedIn ? (
-                        <div>
-                            <button className="btn btn-primary col-6 d-md-flex"
-                                onClick={() => toggleAddAuction()}>Create new
-                            </button>
-                            <button className="btn btn-primary col-6 d-md-flex" onClick={() => toggleChats()}>
-                                My chats
-                            </button>
+                        <div className="d-md-flex justify-content-md-end">
+                            <button className="btn btn-primary btn-sm mr-2 mb-2 mb-md-0" onClick={() => toggleAddAuction()}>Create new</button>
+                            <button className="btn btn-primary btn-sm" onClick={() => toggleChats()}>My chats</button>
                         </div>
                     ) : null}
                 </div>
@@ -255,7 +241,7 @@ function Auctions({
                 <Chats auction={activeAuction} username={username} toggle={toggleChats} />
             ) : null}
 
-            <button onClick={() => setIsFilterPopupOpen(true)}>Filter Auctions</button>
+            <button className="btn btn-secondary mb-3" onClick={() => setIsFilterPopupOpen(true)}>Filter Auctions</button>
 
             <FilterPopup
                 isOpen={isFilterPopupOpen}
@@ -264,35 +250,64 @@ function Auctions({
                 maxPrice={maxPrice}
             />
 
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th onClick={() => onHeaderClick('title')}>Name{renderSortIcon('title')}</th>
-                        <th onClick={() => onHeaderClick('body')}>Desc{renderSortIcon('body')}</th>
-                        <th onClick={() => onHeaderClick('status')}>Status{renderSortIcon('status')}</th>
-                        <th onClick={() => onHeaderClick('price')}>Price{renderSortIcon('price')}</th>
-                        <th onClick={() => onHeaderClick('seller_name')}>Seller{renderSortIcon('seller_name')}</th>
-                        {isLoggedIn && <th>Options</th>}
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        sortedAuctions.map((auction, key) =>
+            <div className="table-responsive">
+                <table className={isMobile ? "table" : "table table-striped"}>
+                    <thead>
+                        <tr>
+                            <th onClick={() => onHeaderClick('title')}>Name{renderSortIcon('title')}</th>
+                            <th onClick={() => onHeaderClick('body')}>Desc{renderSortIcon('body')}</th>
+                            <th onClick={() => onHeaderClick('status')}>Status{renderSortIcon('status')}</th>
+                            <th onClick={() => onHeaderClick('price')}>Price{renderSortIcon('price')}</th>
+                            {isMobile ? null : (
+                                <>
+                                <th onClick={() => onHeaderClick('seller_name')}>Seller{renderSortIcon('seller_name')}</th>
+                                {isLoggedIn && <th>Options</th>}
+                                </>
+                            )
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                         {isMobile ? (
 
-                            <tr key={key}>
-                                <td className='table-data'>{auction.title}</td>
-                                <td className='table-data'>{auction.body}</td>
-                                <td className='table-data'>{FullStatus[auction.status]}</td>
-                                <td className='table-data'>${auction.price}</td>
-                                <td className='table-data'>{auction.seller_name}</td>
-                                {isLoggedIn ? (
-                                    renderButtons(auction)
-                                ) : null}
-                            </tr>
-                        )
-                    }
-                </tbody>
-            </table>
+                            sortedAuctions.map((auction, key) => <>
+                                <tr key={key}>
+                                    <td className='table-data'>{auction.title}</td>
+                                    <td className='table-data'>{FullStatus[auction.status]}</td>
+                                    <td className='table-data'>${auction.price}</td>
+                                    <td className='table-data'>{auction.seller_name}</td>
+                                </tr>
+                                <tr>
+                                    <td className='table-data' colSpan="2">{auction.body}</td>
+                                    <td className='table-data' colSpan="2">
+                                        {isLoggedIn ? (
+                                            renderButtons(auction)
+                                        ) : null}
+                                    </td>
+                                </tr>
+                            </>
+                            )
+                         ) : (
+
+                            sortedAuctions.map((auction, key) => <>
+                                    <tr key={key}>
+                                        <td className='table-data'>{auction.title}</td>
+                                        <td className='table-data'>{auction.body}</td>
+                                        <td className='table-data'>{FullStatus[auction.status]}</td>
+                                        <td className='table-data'>${auction.price}</td>
+                                        <td className='table-data'>{auction.seller_name}</td>
+                                        <td className='table-data'>
+                                            {isLoggedIn ? (
+                                                renderButtons(auction)
+                                            ) : null}
+                                        </td>
+                                    </tr>
+                            </>
+                            )
+                         )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

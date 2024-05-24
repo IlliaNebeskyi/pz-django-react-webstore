@@ -73,7 +73,7 @@ function App() {
   return (
     <main className="container">
       <div className="row">
-        <div className="col-md-6 col-sm-10 col-lg-10 mx-auto p-0">
+        <div className="col-md-9 col-lg-12 mx-auto p-0">
           <div className="card p-3">
             <div>
               <div className="row">
@@ -106,7 +106,7 @@ function App() {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-6 col-sm-10 col-lg-10 mx-auto p-0">
+        <div className="col-sm-6 col-md-9 col-lg-12 mx-auto p-0">
           <div className="card p-3">
             <Auctions username={username} isLoggedIn={isLoggedIn} />
           </div>

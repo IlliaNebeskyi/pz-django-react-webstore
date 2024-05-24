@@ -52,5 +52,7 @@ init: docker-rm
 	#
 	# docker exec backend python manage.py createsuperuser --noinput # http://localhost:8000/admin/
 
+	docker exec -i db mysql -u auctionuser -pauctionpassword auctiondb < db/initdb.sql
+
 	docker-compose up -d frontend
 	docker-compose up -d nginx
