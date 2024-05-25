@@ -19,8 +19,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
-    ports:
-      - "3306:3306"
 
   backend:
     container_name: backend
@@ -41,8 +39,6 @@ services:
       - DJANGO_SUPERUSER_EMAIL=admin@localhost
       - DJANGO_SETTINGS_MODULE=app.settings
     restart: always
-    ports:
-      - "8000:8000"
 
   frontend:
     container_name: frontend
@@ -55,8 +51,6 @@ services:
     depends_on:
       - backend
     restart: always
-    ports:
-      - "3000:3000"
 
   nginx:
     container_name: nginx

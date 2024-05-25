@@ -24,25 +24,6 @@ class ListChatsView(APIView):
 
         serializer = serializers.ChatSerializer(all_chats, many=True)
         return Response(serializer.data)
-        
-# class ListAuctionChatsView(APIView):
-#     permission_classes = [IsAuthenticated]
-
-#     def get(self, request, auction_id):
-#         try:
-#             auction = models.AddAuction.objects.get(pk=auction_id)
-
-#             if request.user != auction.seller:
-#                 return Response({'error': 'You are not the seller of this auction'}, status=403)
-
-#             chats = models.Chat.objects.filter(auction=auction)
-#             serializer = serializers.ChatSerializer(chats, many=True)
-#             return Response(serializer.data)
-
-#         except models.AddAuction.DoesNotExist:
-#             return Response({'error': 'Auction not found'}, status=404)
-#         except Exception as e:
-#             return Response({'error': str(e)}, status=500)
 
 
 class ListChatMessagesView(APIView):
