@@ -8,8 +8,10 @@ WORKDIR /code
 COPY ./requirements.txt /code/
 RUN pip install --no-cache-dir -r requirements.txt
 
+ENV DJANGO_SETTINGS_MODULE=app.settings
+
 COPY . /code/
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "app.asgi:application"]
